@@ -9,3 +9,8 @@ glucose level, blood pressure, BMI, insulin, and age. The dataset is preprocesse
 Multiple algorithms, including K-Nearest Neighbors and Random Forest, are trained and evaluated to select the most accurate model. The final trained model is saved 
 and integrated into a Flask web application that allows users to input health details and receive instant predictions. This system demonstrates practical use of data analysis, 
 model training, and web deployment in healthcare prediction.
+
+
+
+
+drive link for diabetes predection model :  https://drive.google.com/drive/folders/1Q2s6HcEYYCmN2JoyHIGypkN-_3xtdnN7?usp=drive_link

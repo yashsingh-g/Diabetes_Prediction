@@ -13,4 +13,4 @@ model training, and web deployment in healthcare prediction.
 
 
 
-drive link for diabetes predection model :  https://drive.google.com/drive/folders/1Q2s6HcEYYCmN2JoyHIGypkN-_3xtdnN7?usp=drive_link
+drive link for diabetes prediction model :  https://drive.google.com/drive/folders/1Q2s6HcEYYCmN2JoyHIGypkN-_3xtdnN7?usp=drive_link

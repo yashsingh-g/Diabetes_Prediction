@@ -11,6 +11,3 @@ and integrated into a Flask web application that allows users to input health de
 model training, and web deployment in healthcare prediction.
 
 
-
-
-drive link for diabetes prediction model :  https://drive.google.com/drive/folders/1Q2s6HcEYYCmN2JoyHIGypkN-_3xtdnN7?usp=drive_link

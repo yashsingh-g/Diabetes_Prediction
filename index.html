@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="{{ url_for('static', filename = 'favicon.png') }}" type="image/icon type">
+    <title>Diabetes Risk Calculator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+
+</head>
+<body style = "background-color: #1b1c1d;">
+
+<div class="ui container">
+        <h3 style = "background-color: #1b1c1d;font-size: xx-large; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; margin-top: 10px;" class="ui block inverted center aligned header">
+            Diabetes Risk Calculator
+        </h3>
+    <div class="ui inverted segment">
+      <div class="ui inverted form">
+        <form action="{{ url_for('predict') }}" method="POST">
+        <div class="two fields">
+
+          <div class="field">
+            <label>Number of Pregnancies ?</label>
+                <input autofocus type="text" name="pregnancies" placeholder="Number of Pregnancies eg. 0" >
+          </div>
+		  
+          <div class="field">
+            <label>Glucose (mg/dL) ?</label>
+                <input autofocus type="text" name="glucose" placeholder="Glucose (mg/dL) eg. 60" >
+          </div>
+
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>Blood Pressure (mmHg) ?</label>
+                <input autofocus type="text" name="bloodpressure" placeholder="Blood Pressure (mmHg) eg. 60" >
+          </div>
+          <div class="field">
+            <label>Skin Thickness (mm) ?</label>
+                <input autofocus type="text" name="skinthickness" placeholder="Skin Thickness (mm) eg. 10" >
+          </div>
+        </div>
+        <div class="two fields">
+            <div class="field">
+                <label>Insulin Level (IU/mL) ?</label>
+                <input autofocus type="text" name="insulin" placeholder="Insulin Level (IU/mL) eg. 70" >
+            </div>
+            <div class="field">
+                <label>Body Mass Index (kg/m²) ?</label>
+                <input autofocus type="text" name="bmi" placeholder="Body Mass Index (kg/m²) eg. 20.1" >
+            </div>
+          </div>
+          <div class="two fields">
+            <div class="field">
+                <label>Diabetes Pedigree Function ?</label>
+                <input autofocus type="text" name="dpf" placeholder="Diabetes Pedigree Function(likelihood of diabetes based on family history) eg. 0.32" >
+            </div>
+            <div class="field">
+                <label>Age (years) ?</label>
+                <input autofocus type="text" name="age" placeholder="Age (years) eg. 24" >
+            </div>
+          </div>
+          <button class="ui primary button" type="submit" >Predict</button>
+      </form>
+      </div>
+    </div>
+    
+  <table class="ui selectable inverted table">
+    <thead>
+      <tr><th colspan="9">
+        Sample Data
+      </th>
+    </tr>
+      <tr>
+        <th>Pregnancies</th>
+        <th>Glucose</th>
+        <th>BloodPressure</th>
+        <th>SkinThickness</th>
+        <th>Insulin</th>
+        <th>BMI</th>
+        <th>DiabetesPedigreeFunction</th>
+        <th>Age</th>
+        <th class="right aligned">Outcome</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>3</td>
+        <td>136</td>
+        <td>58</td>
+        <td>38</td>
+        <td>1</td>
+        <td>37.6</td>
+        <td>0.137</td>
+        <td>50</td>
+        <td class="right aligned">Diabetic</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>82</td>
+        <td>80</td>
+        <td>30</td>
+        <td>135</td>
+        <td>39.2</td>
+        <td>0.243</td>
+        <td>25</td>
+        <td class="right aligned">Not Diabetic</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GlucoSense AI - Professional machine-learning powered diabetes risk assessment and early screening assistant.">
+  <title>GlucoSense AI — Clinical Diabetes Risk Intelligence</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom Design System -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+  <!-- Site Header & Navigation -->
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-wrapper">
+        <a href="{{ url_for('home') }}" class="brand" aria-label="GlucoSense AI Home">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">GlucoSense <span class="badge-ai">Clinical AI</span></span>
+            <span class="brand-tagline">Diabetes Risk Intelligence</span>
+          </div>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="#assessment" class="nav-link">Risk Assessment</a></li>
+          <li><a href="#presets" class="nav-link">Demo Profiles</a></li>
+          <li><a href="#sample-data" class="nav-link">Sample Cases</a></li>
+          <li><a href="#biomarkers" class="nav-link">Biomarker Guide</a></li>
+        </ul>
+
+        <div class="nav-badge-pill">
+          <span class="pulse-dot"></span>
+          <span>Random Forest Active</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="container">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+        <span>Supervised Ensemble Learning Engine</span>
+      </div>
+
+      <h1 class="hero-title">
+        Predictive Intelligence for <br>
+        <span class="gradient-text">Early Diabetes Risk Assessment</span>
+      </h1>
+
+      <p class="hero-description">
+        Evaluate individual patient metabolic and biometric profiles with machine learning.
+        Trained on standardized clinical parameters to deliver instant risk assessment and educational preventive guidance.
+      </p>
+
+      <!-- Stats Grid -->
+      <div class="hero-stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">8</div>
+          <div class="stat-label">Clinical Biomarkers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">Ensemble</div>
+          <div class="stat-label">Random Forest Model</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">&lt; 20ms</div>
+          <div class="stat-label">Inference Speed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">ADA Aligned</div>
+          <div class="stat-label">Reference Framework</div>
+        </div>
+      </div>
+
+      <!-- Medical Disclaimer Banner -->
+      <div class="disclaimer-banner" role="alert">
+        <div class="disclaimer-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <div class="disclaimer-text">
+          <strong>Important Clinical & Educational Notice:</strong> This platform is an educational risk calculation tool powered by a machine-learning model. It does not replace medical diagnosis, laboratory testing (such as HbA1c), or personalized physician consultation.
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Preset Selector Section -->
+    <section class="preset-section" id="presets">
+      <div class="preset-card">
+        <div class="preset-info">
+          <div class="preset-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="preset-title">Instant Demonstration Profiles</h3>
+            <p class="preset-desc">Populate the evaluation form with verified sample profiles from clinical test benchmarks.</p>
+          </div>
+        </div>
+        <div class="preset-buttons">
+          <button type="button" class="btn-preset preset-low" data-preset="low" title="Load healthy metabolic profile">
+            <span>●</span> Sample 1: Low Risk (Healthy)
+          </button>
+          <button type="button" class="btn-preset preset-borderline" data-preset="borderline" title="Load borderline risk profile">
+            <span>●</span> Sample 2: Borderline Case
+          </button>
+          <button type="button" class="btn-preset preset-high" data-preset="high" title="Load high risk metabolic profile">
+            <span>●</span> Sample 3: Elevated Risk
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Assessment Form -->
+    <section class="assessment-container" id="assessment">
+      <div class="form-shell">
+        <div class="form-header">
+          <div>
+            <h2 class="form-header-title">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+              Patient Physiological Assessment
+            </h2>
+            <p class="form-header-subtitle">
+              Enter the 8 clinical biomarker measurements below to evaluate risk status with the ensemble predictor.
+            </p>
+          </div>
+        </div>
+
+        <form action="{{ url_for('predict') }}" method="POST" id="prediction-form" novalidate>
+
+          <!-- Group 1: Metabolic Indicators -->
+          <div class="field-group-title">01 / Metabolic Indicators</div>
+          <div class="fields-grid">
+            
+            <!-- Glucose -->
+            <div class="input-card">
+              <div class="input-label-row">
+                <label for="input-glucose" class="input-label">Plasma Glucose (2h OGTT)</label>
+                <span class="input-unit">mg/dL</span>
+              </div>
+              <div class="input-wrapper">
+                <input 
+                  type="number" 
+                  step="any" 
+                  min="0" 
+                  max="500" 
+                  id="input-glucose" 
+                  name="glucose" 
+                  class="form-control" 
+                  placeholder="e.g. 115" 
+                  required
+                >
+              </div>
+              <div class="input-meta-row">
+                <span class="normal-range-hint">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                  Normal: &lt; 140 mg/dL | Elevated: &ge; 140
+                </span>
+                <span class="validation-feedback"></span>
+              </div>
+            </div>
+
+            <!-- Insulin -->
+            <div class="input-card">
+              <div class="input-label-row">
+                <label for="input-insulin" class="input-label">2-Hour Serum Insulin</label>
+                <span class="input-unit">μU/mL</span>
+              </div>
+              <div class="input-wrapper">
+                <input 
+                  type="number" 
+                  step="any" 
+                  min="0" 
+                  max="1000" 
+                  id="input-insulin" 
+                  name="insulin" 
+                  class="form-control" 
+                  placeholder="e.g. 80" 
+                  required
+                >
+              </div>
+              <div class="input-meta-row">
+                <span class="normal-range-hint">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                  Fasting: 15–160 μU/mL | Enter 0 if unavailable
+                </span>
+                <span class="validation-feedback"></span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Group 2: Biometrics & Cardiovascular -->
+          <div class="field-group-title">02 / Biometrics & Vitals</div>
+          <div class="fields-grid three-col">
+
+            <!-- BMI -->
+            <div class="input-card">
+              <div class="input-label-row">
+                <label for="input-bmi" class="input-label">Body Mass Index (BMI)</label>
+                <span class="input-unit">kg/m²</span>
+              </div>
+              <div class="input-wrapper">
+                <input 
+                  type="number" 
+                  step="0.1" 
+                  min="0" 
+                  max="100" 
+                  id="input-bmi" 
+                  name="bmi" 
+                  class="form-control" 
+                  placeholder="e.g. 26.4" 
+                  required
+                >
+              </div>
+              <div class="input-meta-row">
+                <button type="button" id="toggle-bmi-calc" class="bmi-helper-toggle">
+                  🖩 Calculate from Ht/Wt
+                </button>
+                <span class="validation-feedback"></span>
+              </div>
+
+              <!-- Collapsible BMI Calculator Helper -->
+              <div id="bmi-calc-drawer" class="bmi-calculator-drawer">
+                <div class="bmi-calc-grid">
+                  <div class="bmi-calc-field">
+                    <label for="calc-height">Height (cm)</label>
+                    <input type="number" id="calc-height" placeholder="e.g. 175">
+                  </div>
+                  <div class="bmi-calc-field">
+                    <label for="calc-weight">Weight (kg)</label>
+                    <input type="number" id="calc-weight" placeholder="e.g. 74">
+                  </div>
+                  <button type="button" id="btn-apply-bmi" class="btn-calc-apply">Apply BMI</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Blood Pressure -->
+            <div class="input-card">
+              <div class="input-label-row">
+                <label for="input-bp" class="input-label">Diastolic Blood Pressure</label>
+                <span class="input-unit">mmHg</span>
+              </div>
+              <div class="input-wrapper">
+                <input 
+                  type="number" 
+                  step="any" 
+                  min="0" 
+                  max="250" 
+                  id="input-bp" 
+                  name="bloodpressure" 
+                  class="form-control" 
+                  placeholder="e.g. 72" 
+                  required
+                >
+              </div>
+              <div class="input-meta-row">
+                <span class="normal-range-hint">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                  Optimal: &lt; 80 mmHg | Elevated: 80–89
+                </span>
+                <span class="validation-feedback"></span>
+              </div>
+            </div>
+
+            <!-- Skin Thickness -->
+            <div class="input-card">
+              <div class="input-label-row">
+                <label for="input-skinthickness" class="input-label">Triceps Skin Thickness</label>
+                <span class="input-unit">mm</span>
+              </div>
+              <div class="input-wrapper">
+                <input 
+                  type="number" 
+                  step="any" 
+                  min="0" 
+                  max="120" 
+                  id="input-skinthickness" 
+                  name="skinthickness" 
+                  class="form-control" 
+                  placeholder="e.g. 23" 
+                  required
+                >
+              </div>
+              <div class="input-meta-row">
+                <span class="normal-range-hint">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                  Median: ~23 mm | Standard range: 10–50
+                </span>
+                <span class="validation-feedback"></span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Group 3: Demographics & Genetics -->
+          <div class="field-group-title">03 / Demographics & Genetics</div>
+          <div class="fields-grid three-col">
+
+            <!-- Age -->
+            <div class="input-card">
+              <div class="input-label-row">
+                <label for="input-age" class="input-label">Age</label>
+                <span class="input-unit">Years</span>
+              </div>
+              <div class="input-wrapper">
+                <input 
+                  type="number" 
+                  step="1" 
+                  min="1" 
+                  max="120" 
+                  id="input-age" 
+                  name="age" 
+                  class="form-control" 
+                  placeholder="e.g. 38" 
+                  required
+                >
+              </div>
+              <div class="input-meta-row">
+                <span class="normal-range-hint">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                  Adult benchmark: 21+ years
+                </span>
+                <span class="validation-feedback"></span>
+              </div>
+            </div>
+
+            <!-- Pregnancies -->
+            <div class="input-card">
+              <div class="input-label-row">
+                <label for="input-pregnancies" class="input-label">Pregnancies</label>
+                <span class="input-unit">Count</span>
+              </div>
+              <div class="input-wrapper">
+                <input 
+                  type="number" 
+                  step="1" 
+                  min="0" 
+                  max="30" 
+                  id="input-pregnancies" 
+                  name="pregnancies" 
+                  class="form-control" 
+                  placeholder="e.g. 1" 
+                  required
+                >
+              </div>
+              <div class="input-meta-row">
+                <span class="normal-range-hint">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                  Times pregnant (enter 0 for none/males)
+                </span>
+                <span class="validation-feedback"></span>
+              </div>
+            </div>
+
+            <!-- Diabetes Pedigree Function -->
+            <div class="input-card">
+              <div class="input-label-row">
+                <label for="input-dpf" class="input-label">Pedigree Function (DPF)</label>
+                <span class="input-unit">Score</span>
+              </div>
+              <div class="input-wrapper">
+                <input 
+                  type="number" 
+                  step="0.001" 
+                  min="0" 
+                  max="3.0" 
+                  id="input-dpf" 
+                  name="dpf" 
+                  class="form-control" 
+                  placeholder="e.g. 0.42" 
+                  required
+                >
+              </div>
+              <div class="input-meta-row">
+                <span class="normal-range-hint">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                  Family history score (0.08–2.42)
+                </span>
+                <span class="validation-feedback"></span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <div class="form-action-left">
+              <button type="button" id="btn-reset-form" class="btn-reset">
+                Clear All Fields
+              </button>
+            </div>
+
+            <button type="submit" class="btn-submit">
+              <span class="spinner" aria-hidden="true"></span>
+              <span class="btn-text-content">Run Predictive Assessment</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+    <!-- Clinical Benchmark Sample Cases Table -->
+    <section class="sample-section" id="sample-data">
+      <div class="section-headline">
+        <span class="section-badge">Reference Dataset Benchmarks</span>
+        <h2 class="section-title">Verified Clinical Training Cases</h2>
+        <p class="section-subtitle">Real patient records from the training corpus illustrating feature correlations with risk outcome.</p>
+      </div>
+
+      <div class="table-card">
+        <div class="table-responsive">
+          <table class="clinical-table">
+            <thead>
+              <tr>
+                <th>Pregnancies</th>
+                <th>Glucose (mg/dL)</th>
+                <th>Blood Pressure (mmHg)</th>
+                <th>Skin Thickness (mm)</th>
+                <th>Insulin (μU/mL)</th>
+                <th>BMI (kg/m²)</th>
+                <th>Pedigree (DPF)</th>
+                <th>Age (Yrs)</th>
+                <th>Clinical Outcome</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>82</td>
+                <td>80</td>
+                <td>30</td>
+                <td>135</td>
+                <td>39.2</td>
+                <td>0.243</td>
+                <td>25</td>
+                <td><span class="badge-status non-diabetic">● Low Risk (Non-Diabetic)</span></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>136</td>
+                <td>58</td>
+                <td>38</td>
+                <td>1</td>
+                <td>37.6</td>
+                <td>0.137</td>
+                <td>50</td>
+                <td><span class="badge-status diabetic">● Elevated Risk (Diabetic)</span></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>110</td>
+                <td>76</td>
+                <td>20</td>
+                <td>100</td>
+                <td>28.4</td>
+                <td>0.382</td>
+                <td>29</td>
+                <td><span class="badge-status non-diabetic">● Low Risk (Non-Diabetic)</span></td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>187</td>
+                <td>68</td>
+                <td>39</td>
+                <td>0</td>
+                <td>37.7</td>
+                <td>0.254</td>
+                <td>41</td>
+                <td><span class="badge-status diabetic">● Elevated Risk (Diabetic)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Clinical Biomarkers Guide -->
+    <section class="sample-section" id="biomarkers">
+      <div class="section-headline">
+        <span class="section-badge">Feature Explainability</span>
+        <h2 class="section-title">Diagnostic Biomarkers Guide</h2>
+        <p class="section-subtitle">Detailed clinical rationale behind each physiological parameter evaluated by the ensemble model.</p>
+      </div>
+
+      <div class="biomarkers-grid">
+        <div class="biomarker-card">
+          <div class="biomarker-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
+          <h3 class="biomarker-name">Plasma Glucose</h3>
+          <span class="biomarker-range-tag">Target: &lt;140 mg/dL</span>
+          <p class="biomarker-desc">Blood sugar concentration measured during a standard 2-hour oral glucose tolerance test. The single strongest individual predictor of metabolic dysfunction.</p>
+        </div>
+
+        <div class="biomarker-card">
+          <div class="biomarker-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+          </div>
+          <h3 class="biomarker-name">Serum Insulin</h3>
+          <span class="biomarker-range-tag">Target: 16–166 μU/mL</span>
+          <p class="biomarker-desc">Pancreatic hormone regulation. Abnormally high values point to peripheral insulin resistance, while depleted levels may indicate beta-cell fatigue.</p>
+        </div>
+
+        <div class="biomarker-card">
+          <div class="biomarker-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>
+          </div>
+          <h3 class="biomarker-name">Body Mass Index (BMI)</h3>
+          <span class="biomarker-range-tag">Target: 18.5–24.9 kg/m²</span>
+          <p class="biomarker-desc">Anthropometric metric linking body mass to height. Excess adiposity is a recognized driver of chronic low-grade inflammation and reduced insulin sensitivity.</p>
+        </div>
+
+        <div class="biomarker-card">
+          <div class="biomarker-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h3 class="biomarker-name">Diastolic BP</h3>
+          <span class="biomarker-range-tag">Target: &lt;80 mmHg</span>
+          <p class="biomarker-desc">Arterial resting pressure. Hypertension and dysglycemia frequently co-occur as key components of metabolic syndrome.</p>
+        </div>
+
+        <div class="biomarker-card">
+          <div class="biomarker-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3 class="biomarker-name">Age</h3>
+          <span class="biomarker-range-tag">Scale: Adult 21+</span>
+          <p class="biomarker-desc">Risk progressively climbs with advancing age due to cumulative beta-cell wear, gradual metabolic rate reduction, and changes in lean body mass.</p>
+        </div>
+
+        <div class="biomarker-card">
+          <div class="biomarker-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="biomarker-name">Pedigree Function (DPF)</h3>
+          <span class="biomarker-range-tag">Index: 0.08–2.42</span>
+          <p class="biomarker-desc">Genetic scoring model estimating familial predisposition based on ancestral occurrence and degree of biological relation.</p>
+        </div>
+
+        <div class="biomarker-card">
+          <div class="biomarker-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/></svg>
+          </div>
+          <h3 class="biomarker-name">Triceps Skinfold</h3>
+          <span class="biomarker-range-tag">Target: 10–50 mm</span>
+          <p class="biomarker-desc">Direct measure of subcutaneous body fat calibrated via calibrated caliper, providing localized body composition information complementary to BMI.</p>
+        </div>
+
+        <div class="biomarker-card">
+          <div class="biomarker-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/></svg>
+          </div>
+          <h3 class="biomarker-name">Pregnancies</h3>
+          <span class="biomarker-range-tag">Count: 0–17</span>
+          <p class="biomarker-desc">Gestational stress history. Multiple pregnancies associate with transient glycemic spikes and elevated lifetime risk of developing Type 2 Diabetes.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-copy">
+          <strong>GlucoSense AI</strong> &mdash; Clinical Risk Intelligence & Early Screening Platform.<br>
+          Powered by Python, Flask &amp; Scikit-Learn Random Forest Architecture.
+        </div>
+        <ul class="footer-links">
+          <li><a href="#assessment">Assessment</a></li>
+          <li><a href="#sample-data">Data Benchmarks</a></li>
+          <li><a href="#biomarkers">Biomarkers</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Client-side Logic Script -->
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

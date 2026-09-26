@@ -1,0 +1,1535 @@
+/* ==========================================================================
+   GlucoSense AI - Modern Clinical AI & Healthcare Design System
+   ========================================================================== */
+
+:root {
+  /* Color Palette */
+  --bg-app: #080c14;
+  --bg-surface: #0f172a;
+  --bg-surface-elevated: #1e293b;
+  --bg-surface-subtle: rgba(30, 41, 59, 0.5);
+  --bg-glass: rgba(15, 23, 42, 0.75);
+  --bg-glass-card: rgba(18, 26, 44, 0.65);
+  --bg-input: #0b1120;
+  
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.14);
+  --border-hover: rgba(14, 165, 233, 0.4);
+  --border-focus: #0ea5e9;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-invert: #040914;
+
+  --accent-cyan: #06b6d4;
+  --accent-cyan-glow: rgba(6, 182, 212, 0.2);
+  --accent-blue: #0ea5e9;
+  --accent-blue-gradient: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
+  --accent-teal: #14b8a6;
+  --accent-indigo: #6366f1;
+
+  --status-low-risk: #10b981;
+  --status-low-risk-bg: rgba(16, 185, 129, 0.12);
+  --status-low-risk-border: rgba(16, 185, 129, 0.35);
+  --status-low-risk-glow: rgba(16, 185, 129, 0.25);
+
+  --status-high-risk: #f43f5e;
+  --status-high-risk-bg: rgba(244, 63, 94, 0.12);
+  --status-high-risk-border: rgba(244, 63, 94, 0.35);
+  --status-high-risk-glow: rgba(244, 63, 94, 0.25);
+
+  --status-warning: #f59e0b;
+  --status-warning-bg: rgba(245, 158, 11, 0.12);
+  --status-warning-border: rgba(245, 158, 11, 0.35);
+
+  /* Shadows & Glows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 36px -6px rgba(0, 0, 0, 0.45);
+  --glow-cyan: 0 0 25px rgba(6, 182, 212, 0.15);
+  --glow-emerald: 0 0 30px rgba(16, 185, 129, 0.2);
+  --glow-rose: 0 0 30px rgba(244, 63, 94, 0.2);
+
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+}
+
+/* Reset & Base Setup */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ambient Background Light */
+body::before {
+  content: '';
+  position: fixed;
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, rgba(6, 182, 212, 0.05) 50%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8, 12, 20, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: var(--transition-base);
+}
+
+.nav-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--accent-blue-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+  color: white;
+  flex-shrink: 0;
+}
+
+.brand-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.brand-name span.badge-ai {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  background: rgba(6, 182, 212, 0.15);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.brand-tagline {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  list-style: none;
+}
+
+.nav-link {
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+}
+
+.nav-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.08);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  border-radius: var(--radius-full);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--status-low-risk);
+  box-shadow: 0 0 8px var(--status-low-risk);
+  animation: pulseAnimation 2s infinite ease-in-out;
+}
+
+@keyframes pulseAnimation {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+.hero-section {
+  padding: 3.5rem 0 2.5rem 0;
+  text-align: center;
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.08);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  border-radius: var(--radius-full);
+  margin-bottom: 1.25rem;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  max-width: 840px;
+  margin: 0 auto 1.25rem auto;
+}
+
+.hero-title .gradient-text {
+  background: linear-gradient(135deg, #38bdf8 0%, #06b6d4 50%, #2dd4bf 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-description {
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  color: var(--text-secondary);
+  max-width: 680px;
+  margin: 0 auto 2rem auto;
+  line-height: 1.6;
+}
+
+/* Hero Stats Grid */
+.hero-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  max-width: 900px;
+  margin: 0 auto 2.5rem auto;
+}
+
+.stat-card {
+  background: var(--bg-glass-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  transition: var(--transition-base);
+}
+
+.stat-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+.stat-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 0.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Medical Disclaimer Banner */
+.disclaimer-banner {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid var(--status-warning-border);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.disclaimer-icon {
+  color: var(--status-warning);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.disclaimer-text {
+  font-size: 0.825rem;
+  color: #fde68a;
+  line-height: 1.45;
+}
+
+.disclaimer-text strong {
+  color: #fff;
+}
+
+/* ==========================================================================
+   Quick Preset Selector Section
+   ========================================================================== */
+.preset-section {
+  margin-bottom: 2rem;
+}
+
+.preset-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.preset-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent-blue-gradient);
+}
+
+.preset-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.preset-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  background: rgba(14, 165, 233, 0.12);
+  color: var(--accent-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.preset-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.preset-desc {
+  font-size: 0.825rem;
+  color: var(--text-secondary);
+}
+
+.preset-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.btn-preset {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.825rem;
+  font-weight: 600;
+  font-family: inherit;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--border-medium);
+  background: var(--bg-surface-elevated);
+  color: var(--text-secondary);
+}
+
+.btn-preset:hover {
+  background: #253349;
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+.btn-preset.preset-low:hover {
+  border-color: var(--status-low-risk);
+  color: var(--status-low-risk);
+  background: var(--status-low-risk-bg);
+}
+
+.btn-preset.preset-high:hover {
+  border-color: var(--status-high-risk);
+  color: var(--status-high-risk);
+  background: var(--status-high-risk-bg);
+}
+
+.btn-preset.preset-borderline:hover {
+  border-color: var(--status-warning);
+  color: var(--status-warning);
+  background: var(--status-warning-bg);
+}
+
+/* ==========================================================================
+   Assessment Form Section
+   ========================================================================== */
+.assessment-container {
+  margin-bottom: 3.5rem;
+}
+
+.form-shell {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 2.25rem;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+.form-header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.form-header-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.form-header-title svg {
+  color: var(--accent-cyan);
+}
+
+.form-header-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 0.2rem;
+}
+
+.field-group-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-cyan);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.field-group-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+.fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.fields-grid.three-col {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Input Card Component */
+.input-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.15rem;
+  transition: var(--transition-base);
+  position: relative;
+}
+
+.input-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.input-card:focus-within {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.25);
+  background: #1a2436;
+}
+
+.input-card.has-error {
+  border-color: var(--status-high-risk);
+  box-shadow: 0 0 0 1px var(--status-high-risk);
+}
+
+.input-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.65rem;
+}
+
+.input-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.input-unit {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.1);
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-sm);
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-control {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.95rem;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: var(--transition-fast);
+  outline: none;
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 0.875rem;
+}
+
+.form-control:focus {
+  border-color: var(--accent-blue);
+  background: #0d1527;
+}
+
+/* Helper Tooltip & Normal Range Indicator */
+.input-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.normal-range-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--text-secondary);
+}
+
+.normal-range-hint svg {
+  width: 12px;
+  height: 12px;
+  color: var(--accent-teal);
+}
+
+.validation-feedback {
+  color: var(--status-high-risk);
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: none;
+}
+
+.input-card.has-error .validation-feedback {
+  display: block;
+}
+
+/* BMI Calculator Helper Accordion / Card */
+.bmi-helper-toggle {
+  background: transparent;
+  border: none;
+  color: var(--accent-cyan);
+  font-size: 0.775rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0;
+}
+
+.bmi-calculator-drawer {
+  display: none;
+  background: #141d30;
+  border: 1px dashed var(--border-hover);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin-top: 0.85rem;
+}
+
+.bmi-calculator-drawer.active {
+  display: block;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.bmi-calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+
+.bmi-calc-field label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.bmi-calc-field input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.65rem;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+.btn-calc-apply {
+  background: var(--accent-teal);
+  color: #031e17;
+  border: none;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-calc-apply:hover {
+  opacity: 0.9;
+}
+
+/* Form Actions / Submit Button */
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.form-action-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.btn-reset {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.85rem 1.4rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-reset:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+.btn-submit {
+  background: var(--accent-blue-gradient);
+  color: white;
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.95rem 2.25rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.35);
+  transition: var(--transition-base);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.5);
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+}
+
+.btn-submit.is-loading {
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s infinite linear;
+  display: none;
+}
+
+.btn-submit.is-loading .spinner {
+  display: inline-block;
+}
+
+.btn-submit.is-loading .btn-text-content {
+  opacity: 0.8;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Dataset / Sample Cases Reference Table
+   ========================================================================== */
+.sample-section {
+  margin-bottom: 3.5rem;
+}
+
+.section-headline {
+  margin-bottom: 1.5rem;
+}
+
+.section-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-cyan);
+  margin-bottom: 0.35rem;
+  display: block;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.table-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.clinical-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.clinical-table th {
+  background: var(--bg-surface-elevated);
+  padding: 0.9rem 1.15rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  font-size: 0.775rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.clinical-table td {
+  padding: 0.95rem 1.15rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.clinical-table tr:last-child td {
+  border-bottom: none;
+}
+
+.clinical-table tbody tr {
+  transition: var(--transition-fast);
+}
+
+.clinical-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.badge-status.diabetic {
+  background: var(--status-high-risk-bg);
+  color: var(--status-high-risk);
+  border: 1px solid var(--status-high-risk-border);
+}
+
+.badge-status.non-diabetic {
+  background: var(--status-low-risk-bg);
+  color: var(--status-low-risk);
+  border: 1px solid var(--status-low-risk-border);
+}
+
+/* ==========================================================================
+   Clinical Biomarkers & Educational Grid
+   ========================================================================== */
+.biomarkers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 3.5rem;
+}
+
+.biomarker-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  transition: var(--transition-base);
+  display: flex;
+  flex-direction: column;
+}
+
+.biomarker-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.biomarker-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: rgba(14, 165, 233, 0.1);
+  color: var(--accent-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.85rem;
+}
+
+.biomarker-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.biomarker-range-tag {
+  font-size: 0.725rem;
+  font-weight: 600;
+  color: var(--accent-teal);
+  background: rgba(20, 184, 166, 0.1);
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-sm);
+  align-self: flex-start;
+  margin-bottom: 0.65rem;
+}
+
+.biomarker-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* ==========================================================================
+   Results Dashboard Page Specific Styles
+   ========================================================================== */
+.results-page-shell {
+  padding: 2.5rem 0 4rem 0;
+}
+
+.result-card-main {
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  margin-bottom: 2.5rem;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+}
+
+/* Result Card - High Risk (Outcome 1) */
+.result-card-main.is-diabetic {
+  background: linear-gradient(180deg, rgba(35, 15, 25, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1px solid var(--status-high-risk-border);
+  box-shadow: 0 12px 40px -10px var(--status-high-risk-glow);
+}
+
+/* Result Card - Low Risk (Outcome 0) */
+.result-card-main.is-healthy {
+  background: linear-gradient(180deg, rgba(10, 30, 25, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1px solid var(--status-low-risk-border);
+  box-shadow: 0 12px 40px -10px var(--status-low-risk-glow);
+}
+
+/* Result Card - Invalid / No Value */
+.result-card-main.is-novalue {
+  background: linear-gradient(180deg, rgba(35, 25, 10, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1px solid var(--status-warning-border);
+}
+
+.result-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.result-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.15rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.is-diabetic .result-status-badge {
+  background: var(--status-high-risk-bg);
+  color: var(--status-high-risk);
+  border: 1px solid var(--status-high-risk-border);
+}
+
+.is-healthy .result-status-badge {
+  background: var(--status-low-risk-bg);
+  color: var(--status-low-risk);
+  border: 1px solid var(--status-low-risk-border);
+}
+
+.is-novalue .result-status-badge {
+  background: var(--status-warning-bg);
+  color: var(--status-warning);
+  border: 1px solid var(--status-warning-border);
+}
+
+.result-headline {
+  font-size: clamp(1.75rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.result-summary-text {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 720px;
+  margin-top: 0.75rem;
+  line-height: 1.6;
+}
+
+.model-meta-tag {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1.15rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.model-meta-tag .tag-label {
+  font-size: 0.725rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.model-meta-tag .tag-label:not(:first-child) {
+  margin-top: 0.5rem;
+}
+
+.model-meta-tag .tag-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 0.2rem;
+}
+
+/* Score / Gauge Bar */
+.probability-gauge-card {
+  background: rgba(11, 17, 32, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.gauge-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.gauge-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.gauge-percentage {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.gauge-track {
+  width: 100%;
+  height: 12px;
+  background: #1e293b;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.gauge-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.is-diabetic .gauge-fill {
+  background: linear-gradient(90deg, #f59e0b 0%, #f43f5e 100%);
+}
+
+.is-healthy .gauge-fill {
+  background: linear-gradient(90deg, #0ea5e9 0%, #10b981 100%);
+}
+
+.gauge-scale-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.725rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+/* Submitted Biomarkers Grid on Result Page */
+.submitted-biomarkers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.patient-val-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+}
+
+.patient-val-card .val-name {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.patient-val-card .val-num {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0.25rem 0;
+}
+
+.patient-val-card .val-range {
+  font-size: 0.725rem;
+  color: var(--text-secondary);
+}
+
+.patient-val-card .val-unit {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Status colors for biomarker values & tags */
+.status-high {
+  color: var(--status-high-risk) !important;
+}
+
+.status-warning {
+  color: var(--status-warning) !important;
+}
+
+.status-low {
+  color: var(--status-low-risk) !important;
+}
+
+.biomarkers-title {
+  margin-top: 2rem;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.results-page-shell .disclaimer-banner {
+  margin-bottom: 2rem;
+}
+
+.result-actions-row .action-buttons-group {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.result-actions-row .btn-submit {
+  text-decoration: none;
+}
+
+.is-novalue .novalue-content {
+  margin-top: 1.5rem;
+}
+
+.is-novalue .novalue-desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn-submit.btn-back-home {
+  display: inline-flex;
+  width: auto;
+  text-decoration: none;
+}
+
+/* Action Plan & Guidance Section */
+.action-plan-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.guidance-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.guidance-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: rgba(14, 165, 233, 0.1);
+  color: var(--accent-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.guidance-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.guidance-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+.guidance-tips-list {
+  list-style: none;
+  font-size: 0.825rem;
+  color: var(--text-secondary);
+}
+
+.guidance-tips-list li {
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 0.45rem;
+}
+
+.guidance-tips-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--status-low-risk);
+  font-weight: 800;
+}
+
+/* Result Action CTAs */
+.result-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.75rem;
+}
+
+.btn-secondary {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.75rem 1.35rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--transition-fast);
+}
+
+.btn-secondary:hover {
+  background: #253349;
+  border-color: var(--border-hover);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.site-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border-subtle);
+  background: #060910;
+  padding: 2.5rem 0;
+  font-size: 0.825rem;
+  color: var(--text-muted);
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.footer-copy strong {
+  color: var(--text-secondary);
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.footer-links a:hover {
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   Print Stylesheet for Clinical PDF / Print Reports
+   ========================================================================== */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+  }
+
+  body::before, .site-header, .preset-section, .btn-submit, .btn-reset, .btn-secondary, .site-footer {
+    display: none !important;
+  }
+
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .result-card-main {
+    background: #ffffff !important;
+    border: 2px solid #000000 !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+  }
+
+  .result-headline, .model-meta-tag .tag-val, .patient-val-card .val-num {
+    color: #000000 !important;
+  }
+
+  .result-summary-text, .patient-val-card .val-name, .guidance-text {
+    color: #374151 !important;
+  }
+
+  .patient-val-card, .guidance-card {
+    background: #f9fafb !important;
+    border: 1px solid #e5e7eb !important;
+  }
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hero-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .biomarkers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .submitted-biomarkers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .action-plan-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+  }
+
+  .hero-section {
+    padding: 2.25rem 0 1.5rem 0;
+  }
+
+  .fields-grid, .fields-grid.three-col {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .form-shell {
+    padding: 1.5rem;
+  }
+
+  .preset-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .result-card-main {
+    padding: 1.5rem;
+  }
+
+  .result-header-row {
+    flex-direction: column;
+  }
+
+  .model-meta-tag {
+    text-align: left;
+    width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .btn-submit {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .biomarkers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .submitted-biomarkers-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}

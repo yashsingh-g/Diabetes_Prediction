@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GlucoSense AI - Clinical Diabetes Risk Assessment Results Dashboard.">
+  <title>Assessment Results — GlucoSense AI</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
+
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Custom Design System -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-wrapper">
+        <a href="{{ url_for('home') }}" class="brand" aria-label="GlucoSense AI Home">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">GlucoSense <span class="badge-ai">Clinical AI</span></span>
+            <span class="brand-tagline">Diabetes Risk Intelligence</span>
+          </div>
+        </a>
+
+        <div class="nav-actions">
+          <a href="{{ url_for('home') }}" class="btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"/>
+              <polyline points="12 19 5 12 12 5"/>
+            </svg>
+            New Assessment
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Results Shell -->
+  <main class="container results-page-shell">
+
+    {% if prediction == 1 %}
+    <!-- Elevated Risk (Diabetic) Outcome Card -->
+    <div class="result-card-main is-diabetic">
+      <div class="result-header-row">
+        <div>
+          <span class="result-status-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            Elevated Risk Profile Detected
+          </span>
+          <h1 class="result-headline">Patient Classification: Elevated Diabetes Risk</h1>
+          <p class="result-summary-text">
+            The ensemble machine learning model has evaluated the submitted biomarker profile and identified patterns consistent with diabetic or prediabetic dysglycemia. Clinical follow-up is strongly advised.
+          </p>
+        </div>
+
+        <div class="model-meta-tag">
+          <div class="tag-label">Classifier Engine</div>
+          <div class="tag-val">Random Forest Ensemble</div>
+          <div class="tag-label">Clinical Outcome</div>
+          <div class="tag-val status-high">Positive (Class 1)</div>
+        </div>
+      </div>
+
+      {% if probability is not none %}
+      <!-- Risk Probability Gauge -->
+      <div class="probability-gauge-card">
+        <div class="gauge-header">
+          <span class="gauge-title">Model Risk Confidence Score</span>
+          <span class="gauge-percentage status-high">{{ probability }}% Estimated Risk</span>
+        </div>
+        <div class="gauge-track">
+          <div class="gauge-fill" data-probability="{{ probability }}"></div>
+        </div>
+        <div class="gauge-scale-labels">
+          <span>0% Low Risk</span>
+          <span>50% Threshold</span>
+          <span>100% High Risk</span>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if values %}
+      <!-- Submitted Biomarkers Grid -->
+      <div class="field-group-title biomarkers-title">Submitted Patient Biomarkers</div>
+      <div class="submitted-biomarkers-grid">
+        <div class="patient-val-card">
+          <div class="val-name">Plasma Glucose</div>
+          <div class="val-num {% if values['Glucose'] >= 140 %}status-high{% else %}status-low{% endif %}">
+            {{ values['Glucose'] }} <span class="val-unit">mg/dL</span>
+          </div>
+          <div class="val-range">Normal: &lt;140 mg/dL</div>
+        </div>
+
+        <div class="patient-val-card">
+          <div class="val-name">Serum Insulin</div>
+          <div class="val-num">{{ values['Insulin'] }} <span class="val-unit">μU/mL</span></div>
+          <div class="val-range">Normal Ref: 16–166 μU/mL</div>
+        </div>
+
+        <div class="patient-val-card">
+          <div class="val-name">Body Mass Index</div>
+          <div class="val-num {% if values['BMI'] >= 30 %}status-high{% elif values['BMI'] >= 25 %}status-warning{% else %}status-low{% endif %}">
+            {{ values['BMI'] }} <span class="val-unit">kg/m²</span>
+          </div>
+          <div class="val-range">Optimal: 18.5–24.9</div>
+        </div>
+
+        <div class="patient-val-card">
+          <div class="val-name">Diastolic BP</div>
+          <div class="val-num">{{ values['BloodPressure'] }} <span class="val-unit">mmHg</span></div>
+          <div class="val-range">Target: &lt;80 mmHg</div>
+        </div>
+
+        <div class="patient-val-card">
+          <div class="val-name">Patient Age</div>
+          <div class="val-num">{{ values['Age']|int }} <span class="val-unit">Years</span></div>
+          <div class="val-range">Adult Profile</div>
+        </div>
+
+        <div class="patient-val-card">
+          <div class="val-name">Pregnancies</div>
+          <div class="val-num">{{ values['Pregnancies']|int }}</div>
+          <div class="val-range">Obstetric History</div>
+        </div>
+
+        <div class="patient-val-card">
+          <div class="val-name">Skinfold Thickness</div>
+          <div class="val-num">{{ values['SkinThickness'] }} <span class="val-unit">mm</span></div>
+          <div class="val-range">Median: ~23 mm</div>
+        </div>
+
+        <div class="patient-val-card">
+          <div class="val-name">Pedigree Function</div>
+          <div class="val-num">{{ values['DiabetesPedigreeFunction'] }}</div>
+          <div class="val-range">Genetic Index (0–2.5)</div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Clinical Guidance Cards for High Risk -->
+    <div class="action-plan-section">
+      <div class="guidance-card">
+        <div class="guidance-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="12" y1="18" x2="12" y2="12"/>
+            <line x1="9" y1="15" x2="15" y2="15"/>
+          </svg>
+        </div>
+        <h3 class="guidance-title">1. Schedule Confirmatory Diagnostic Labs</h3>
+        <p class="guidance-text">
+          Machine learning screenings highlight probability patterns. Request formal diagnostic evaluations from a healthcare professional:
+        </p>
+        <ul class="guidance-tips-list">
+          <li>Fasting Plasma Glucose (FPG) test</li>
+          <li>Hemoglobin A1c (HbA1c) Glycated Blood Test</li>
+          <li>Comprehensive Metabolic Panel &amp; Lipid profile</li>
+        </ul>
+      </div>
+
+      <div class="guidance-card">
+        <div class="guidance-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+            <line x1="6" y1="1" x2="6" y2="4"/>
+            <line x1="10" y1="1" x2="10" y2="4"/>
+            <line x1="14" y1="1" x2="14" y2="4"/>
+          </svg>
+        </div>
+        <h3 class="guidance-title">2. Targeted Glycemic Nutrition</h3>
+        <p class="guidance-text">
+          Clinical evidence supports stabilizing blood sugar through intentional dietary structure:
+        </p>
+        <ul class="guidance-tips-list">
+          <li>Prioritize high-viscosity soluble dietary fiber (beans, oats, legumes)</li>
+          <li>Replace refined simple carbohydrates with low-GI complex grains</li>
+          <li>Minimize sugar-sweetened beverages and ultra-processed snacks</li>
+        </ul>
+      </div>
+
+      <div class="guidance-card">
+        <div class="guidance-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 14 14"/>
+          </svg>
+        </div>
+        <h3 class="guidance-title">3. Physical Conditioning &amp; Muscle Uptake</h3>
+        <p class="guidance-text">
+          Skeletal muscle is the primary organ responsible for non-insulin dependent glucose clearance:
+        </p>
+        <ul class="guidance-tips-list">
+          <li>Target at least 150 minutes of moderate aerobic activity weekly</li>
+          <li>Incorporate 2–3 weekly resistance training sessions</li>
+          <li>Engage in 10-minute post-meal light walking</li>
+        </ul>
+      </div>
+    </div>
+
+    {% elif prediction == 0 %}
+    <!-- Low Risk (Non-Diabetic) Outcome Card -->
+    <div class="result-card-main is-healthy">
+      <div class="result-header-row">
+        <div>
+          <span class="result-status-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Low Risk Profile Confirmed
+          </span>
+          <h1 class="result-headline">Patient Classification: Low Diabetes Risk</h1>
+          <p class="result-summary-text">
+            The ensemble machine learning model has evaluated the submitted physiological biomarkers and found metrics largely consistent with healthy non-diabetic metabolic baselines.
+          </p>
+        </div>
+
+        <div class="model-meta-tag">
+          <div class="tag-label">Classifier Engine</div>
+          <div class="tag-val">Random Forest Ensemble</div>
+          <div class="tag-label">Clinical Outcome</div>
+          <div class="tag-val status-low">Negative (Class 0)</div>
+        </div>
+      </div>
+
+      {% if probability is not none %}
+      <!-- Risk Probability Gauge -->
+      <div class="probability-gauge-card">
+        <div class="gauge-header">
+          <span class="gauge-title">Model Risk Estimation</span>
+          <span class="gauge-percentage status-low">{{ probability }}% Estimated Risk</span>
+        </div>
+        <div class="gauge-track">
+          <div class="gauge-fill" data-probability="{{ probability }}"></div>
+        </div>
+        <div class="gauge-scale-labels">
+          <span>0% Low Risk</span>
+          <span>50% Threshold</span>
+          <span>100% High Risk</span>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if values %}
+      <!-- Submitted Biomarkers Grid -->
+      <div class="field-group-title biomarkers-title">Submitted Patient Biomarkers</div>
+      <div class="submitted-biomarkers-grid">
+        <div class="patient-val-card">
+          <div class="val-name">Plasma Glucose</div>
+          <div class="val-num status-low">
+            {{ values['Glucose'] }} <span class="val-unit">mg/dL</span>
+          </div>
+          <div class="val-range">Normal: &lt;140 mg/dL</div>
+        </div>
+
+        <div class="patient-val-card">
+          <div class="val-name">Serum Insulin</div>
+          <div class="val-num">{{ values['Insulin'] }} <span class="val-unit">μU/mL</span></div>
+          <div class="val-range">Normal Ref: 16–166 μU/mL</div>
+        </div>
+
+        <div class="patient-val-card">
+          <div class="val-name">Body Mass Index</div>
+          <div class="val-num {% if values['BMI'] < 25 %}status-low{% else %}status-warning{% endif %}">
+            {{ values['BMI'] }} <span class="val-unit">kg/m²</span>
+          </div>
+          <div class="val-range">Optimal: 18.5–24.9</div>
+        </div>
+
+        <div class="patient-val-card">
+          <div class="val-name">Diastolic BP</div>
+          <div class="val-num">{{ values['BloodPressure'] }} <span class="val-unit">mmHg</span></div>
+          <div class="val-range">Target: &lt;80 mmHg</div>
+        </div>
+
+        <div class="patient-val-card">
+          <div class="val-name">Patient Age</div>
+          <div class="val-num">{{ values['Age']|int }} <span class="val-unit">Years</span></div>
+          <div class="val-range">Adult Profile</div>
+        </div>
+
+        <div class="patient-val-card">
+          <div class="val-name">Pregnancies</div>
+          <div class="val-num">{{ values['Pregnancies']|int }}</div>
+          <div class="val-range">Obstetric History</div>
+        </div>
+
+        <div class="patient-val-card">
+          <div class="val-name">Skinfold Thickness</div>
+          <div class="val-num">{{ values['SkinThickness'] }} <span class="val-unit">mm</span></div>
+          <div class="val-range">Median: ~23 mm</div>
+        </div>
+
+        <div class="patient-val-card">
+          <div class="val-name">Pedigree Function</div>
+          <div class="val-num">{{ values['DiabetesPedigreeFunction'] }}</div>
+          <div class="val-range">Genetic Index (0–2.5)</div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Preventive Guidance for Low Risk -->
+    <div class="action-plan-section">
+      <div class="guidance-card">
+        <div class="guidance-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <h3 class="guidance-title">Maintain Active Metabolic Health</h3>
+        <p class="guidance-text">
+          Consistent aerobic and strength exercise sustains cellular insulin sensitivity and supports long-term glucose homeostasis.
+        </p>
+        <ul class="guidance-tips-list">
+          <li>150 minutes of brisk walking, cycling, or swimming per week</li>
+          <li>Avoid extended sedentary periods during daily routines</li>
+        </ul>
+      </div>
+
+      <div class="guidance-card">
+        <div class="guidance-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <h3 class="guidance-title">Whole Food Dietary Framework</h3>
+        <p class="guidance-text">
+          Protect metabolic health by choosing nutrient-dense carbohydrates with balanced macronutrient pairings.
+        </p>
+        <ul class="guidance-tips-list">
+          <li>Focus on high fiber vegetables, seeds, nuts, and legumes</li>
+          <li>Maintain regular, balanced meal intervals</li>
+        </ul>
+      </div>
+
+      <div class="guidance-card">
+        <div class="guidance-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 14 14"/>
+          </svg>
+        </div>
+        <h3 class="guidance-title">Routine Preventative Checkups</h3>
+        <p class="guidance-text">
+          Annual or biennial wellness exams ensure early detection of any subtle physiological shifts over time.
+        </p>
+        <ul class="guidance-tips-list">
+          <li>Periodic fasting blood glucose screening</li>
+          <li>Routine blood pressure and lipid checks</li>
+        </ul>
+      </div>
+    </div>
+
+    {% elif no_value %}
+    <!-- Incomplete / Error State Card -->
+    <div class="result-card-main is-novalue">
+      <div class="result-header-row">
+        <div>
+          <span class="result-status-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            Incomplete or Invalid Input
+          </span>
+          <h1 class="result-headline">Biomarker Data Incomplete</h1>
+          <p class="result-summary-text">
+            The prediction pipeline requires all 8 numerical physiological features to generate an accurate ensemble assessment. One or more values were missing, non-numerical, or outside expected boundaries.
+          </p>
+        </div>
+      </div>
+
+      <div class="novalue-content">
+        <p class="novalue-desc">
+          Required input features include: <strong>Pregnancies, Glucose, Blood Pressure, Skin Thickness, Serum Insulin, BMI, Diabetes Pedigree Function, and Age</strong>.
+        </p>
+        <a href="{{ url_for('home') }}" class="btn-submit btn-back-home">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+          </svg>
+          Return to Assessment Form
+        </a>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Clinical Disclaimer Banner -->
+    <div class="disclaimer-banner" role="alert">
+      <div class="disclaimer-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </div>
+      <div class="disclaimer-text">
+        <strong>Medical &amp; Diagnostic Disclaimer:</strong> This assessment is generated purely by an algorithmic classification model and should not be used as a definitive clinical diagnosis or treatment guide. Consult a board-certified physician or endocrinologist for laboratory testing and diagnosis.
+      </div>
+    </div>
+
+    <!-- Actions Row -->
+    <div class="result-actions-row">
+      <div class="action-buttons-group">
+        <button type="button" id="btn-print-report" class="btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          Print / Save PDF Report
+        </button>
+      </div>
+
+      <a href="{{ url_for('home') }}" class="btn-submit">
+        <span>Perform Another Assessment</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-copy">
+          <strong>GlucoSense AI</strong> &mdash; Clinical Risk Intelligence &amp; Early Screening Platform.<br>
+          Powered by Python, Flask &amp; Scikit-Learn Random Forest Architecture.
+        </div>
+        <ul class="footer-links">
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="{{ url_for('home') }}#assessment">Assessment</a></li>
+          <li><a href="{{ url_for('home') }}#sample-data">Data Benchmarks</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

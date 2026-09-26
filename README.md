@@ -59,6 +59,10 @@ Diabetes_Prediction/
 - Add more machine learning models
 - Enhance the user interface
 
+## 🚀 Live Demo on Vercel 
+
+[View Live Project](https://diabetesprediction-proj.vercel.app/)
+
 ## Author
 
 **Yash Kanyal**

@@ -46,6 +46,10 @@ Diabetes_Prediction/
 │   ├── index.html
 │   └── result.html
 └── static/
+    ├── css/
+    │   └── styles.css
+    ├── js/
+    │   └── app.js
     └── favicon.png
 ```
 
